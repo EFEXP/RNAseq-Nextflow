@@ -1,0 +1,5 @@
+.nextflow.*
+data/work
+data/.nextflow/cache
+__pycache__
+data/indices

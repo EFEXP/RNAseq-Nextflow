@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+    bio:
+        image: bio
+        volumes: 
+          - type: bind
+            source: ./data
+            target: /data
+        restart: always   
+        stdin_open: true
