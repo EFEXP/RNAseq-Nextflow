@@ -1,22 +1,8 @@
 # Base image
 FROM ubuntu:20.04
 
-################## METADATA ######################
-LABEL base.image="ubuntu:20.04"
-LABEL version="4"
-LABEL software="Biocontainers base Image"
-LABEL software.version="08252016"
-LABEL about.summary="Base image for BioDocker"
-LABEL about.home="http://biocontainers.pro"
-LABEL about.documentation="https://github.com/BioContainers/specs/wiki"
-LABEL license="https://github.com/BioContainers/containers/blob/master/LICENSE"
-LABEL about.tags="Genomics,Proteomics,Transcriptomics,General,Metabolomics"
-
-################## MAINTAINER ######################
-MAINTAINER Felipe da Veiga Leprevost <felipe@leprevost.com.br>
 
 ENV DEBIAN_FRONTEND noninteractive
-
 
 
 RUN apt-get clean all && \
@@ -48,11 +34,20 @@ RUN apt-get clean all && \
         subversion      \
         python3         \
         python3-pip     \
+        dirmngr       \
+        gnupg       \
+        apt-transport-https       \
+        ca-certificates       \
+        software-properties-common \
         cwltool \
         zlib1g-dev &&   \
         apt-get clean && \
         apt-get purge && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9  && \
+add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' &&\
+apt install --no-install-recommends r-base
 
 RUN ln -s /usr/bin/python3 /usr/bin/python & \
     ln -s /usr/bin/pip3 /usr/bin/pip
